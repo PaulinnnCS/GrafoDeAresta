@@ -13,12 +13,12 @@ typedef struct{
 
 // FUNCOES ============================================================================================================================================================================================================
 
-FILE * abrir_arquivo(char * nome_arquivo);											// funcao para abrir o arquivo
-int ** ler_arquivo(FILE * arquivo);													// retorna a matriz adjacencia do arquivo
-int tamanho_matriz(FILE * arquivo);													// retorna o tamanho da matriz adjacencia do arquivo
-int quantidade_vertice_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo);		// retorna a quantidade de vertices que o grafo de aresta terá
+FILE * abrir_arquivo(char * nome_arquivo);						// funcao para abrir o arquivo
+int ** ler_arquivo(FILE * arquivo);							// retorna a matriz adjacencia do arquivo
+int tamanho_matriz(FILE * arquivo);							// retorna o tamanho da matriz adjacencia do arquivo
+int quantidade_vertice_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo);		// retorna a quantidade de vertices que o grafo de aresta terÃ¡
 vertice * formar_vertices_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo);	// forma os vertices do grafo de aresta
-void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_aresta);// faz a leitura do grafo de aresta
+void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_aresta);    // faz a leitura do grafo de aresta
 
 // MAIN ===========================================================================================================================================================================================================================
 
@@ -26,7 +26,7 @@ int main(){
 	char * nome_arquivo; 			// nome do arquivo de entrada
 	FILE * arquivo;      			// ponteiro do arquivo
 	int ** matriz_adjacencia; 		// armazena a matriz de adjacencia de entrada
-	int qnt_vertice_grafo_aresta; 	// quantidade de vertices que o grafo de arestas terá
+	int qnt_vertice_grafo_aresta; 	// quantidade de vertices que o grafo de arestas terÃ¡
 	
 	// aloca memoria para nome_arquivo
 	nome_arquivo = (char *) malloc(sizeof(char) * 80);
@@ -41,10 +41,10 @@ int main(){
 		arquivo = abrir_arquivo(nome_arquivo);
 		
 		// leitura do arquivo que eh armazenada na matriz
-		matriz_adjacencia = ler_arquivo(arquivo); // O(N²)
+		matriz_adjacencia = ler_arquivo(arquivo); // O(NÂ²)
 		
 		// armazena a quantidade de vertice do grafo de aresta 
-		qnt_vertice_grafo_aresta = quantidade_vertice_grafo_aresta(matriz_adjacencia, arquivo); // O(N²)
+		qnt_vertice_grafo_aresta = quantidade_vertice_grafo_aresta(matriz_adjacencia, arquivo); // O(NÂ²)
 		
 		// se a quantidade for zero, o grafo de entrada nao tem arestas
 		if(qnt_vertice_grafo_aresta == 0){
@@ -52,7 +52,7 @@ int main(){
 		}
 		
 		// leitura da matriz de adjacencia do grafo de aresta a partir dos vertices formados e a quantidade de vertice do grafo de aresta
-		ler_grafo_aresta(formar_vertices_grafo_aresta(matriz_adjacencia, arquivo), qnt_vertice_grafo_aresta); // O(N²) * O(N²) = O(N^4)
+		ler_grafo_aresta(formar_vertices_grafo_aresta(matriz_adjacencia, arquivo), qnt_vertice_grafo_aresta); // O(NÂ²) * O(NÂ²) = O(N^4)
 		
 		system("pause");
 		system("cls");
@@ -82,7 +82,7 @@ FILE * abrir_arquivo(char * nome_arquivo){
 	
 	system("cls");
 	
-	// Verifica se o arquivo foi ou não encontrado
+	// Verifica se o arquivo foi ou nÃ£o encontrado
 	if(arquivo == NULL){
 		printf("Arquivo inexistente, tente novamente!\n");
 		system("pause");
@@ -118,7 +118,7 @@ int tamanho_matriz(FILE * arquivo){ // O(N)
 
 // FAZ A LEITURA DO ARQUIVO E RETORNA A MATRIZ DE ENTRADA =========================================================================================================================
 
-int ** ler_arquivo(FILE * arquivo){ // O(N) + O(N) + O(N²) = O(N²)
+int ** ler_arquivo(FILE * arquivo){ // O(N) + O(N) + O(NÂ²) = O(NÂ²)
 	char caractere;
 	int contador_tamanho_matriz = tamanho_matriz(arquivo); // O(N)
 	int ** matriz_adjacencia;
@@ -157,11 +157,11 @@ int ** ler_arquivo(FILE * arquivo){ // O(N) + O(N) + O(N²) = O(N²)
 
 // DETERMINA A QUANTIDADE DE VERTICE NO GRAFO DE ARESTA =============================================================================================================
 
-int quantidade_vertice_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo){ // O(N²)
+int quantidade_vertice_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo){ // O(NÂ²)
 	int contador_quantidade_arestas = 0;
 	
 	// determina a quantidade de aresta que a matriz de entrada tem
-	for(int i = 0; i < tamanho_matriz(arquivo); i++){ // O(N) * O(N) = O(N²)
+	for(int i = 0; i < tamanho_matriz(arquivo); i++){ // O(N) * O(N) = O(NÂ²)
 		for(int j = 0; j < tamanho_matriz(arquivo); j++){ // O(N)
 			if(matriz_adjacencia[i][j] == 1 && i != j){
 				contador_quantidade_arestas++;
@@ -178,17 +178,17 @@ int quantidade_vertice_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo){ /
 
 // FORMA OS VERTICES DO GRAFO DE ARESTAS ================================================================================================================================
 
-vertice * formar_vertices_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo){ // O(N²)
+vertice * formar_vertices_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo){ // O(NÂ²)
 	
 	vertice * vertice_grafo_aresta;
 	int indice_vertice_grafo_aresta = 0;
-	int qnt_vertice = quantidade_vertice_grafo_aresta(matriz_adjacencia, arquivo); 	// quantidade de vertices do grafo de arestas // O(N²)
+	int qnt_vertice = quantidade_vertice_grafo_aresta(matriz_adjacencia, arquivo); 	// quantidade de vertices do grafo de arestas // O(NÂ²)
 	int tamanho_mat =  tamanho_matriz(arquivo); 									// tamanho matriz de entrada // O(N)
 	
 	// aloca um vetor de registro para armazenar os vertices do grafo de aresta
 	vertice_grafo_aresta = (vertice *) malloc(sizeof(vertice) * qnt_vertice);
 	
-	for(int i = 0; i < tamanho_mat; i++){ // O(N) * O(N) = O(N²)
+	for(int i = 0; i < tamanho_mat; i++){ // O(N) * O(N) = O(NÂ²)
 		for(int j = 0; j < tamanho_mat; j++){
 			// determina os pares de vertices que formam um vertice do grafo de aresta
 			if(matriz_adjacencia[i][j] == 1 && (i < j || i == j)){ 
@@ -204,12 +204,12 @@ vertice * formar_vertices_grafo_aresta(int ** matriz_adjacencia, FILE * arquivo)
 
 // LER A MATRIZ DE ADJACENCIA DO GRAFO DE ARESTAS ===========================================================================================================
 
-void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_aresta){ // O(N²)
+void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_aresta){ // O(NÂ²)
 	
 	// aloca uma matriz auxiliar 
 	// atribui zero para toda a matriz_grafo_aresta 
 	int ** matriz_grafo_aresta = (int **) malloc(sizeof(int *) * qnt_vertice_grafo_aresta);
-	for(int c = 0; c < qnt_vertice_grafo_aresta; c++){ // O(N²)
+	for(int c = 0; c < qnt_vertice_grafo_aresta; c++){ // O(NÂ²)
 		matriz_grafo_aresta[c] = (int *) malloc(sizeof(int) * qnt_vertice_grafo_aresta);
 		for(int d = 0; d < qnt_vertice_grafo_aresta; d++){
 			matriz_grafo_aresta[c][d] = 0;
@@ -217,7 +217,7 @@ void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_ares
 	}
 	
 	// organiza os vertices da matriz adjacencia do grafo de aresta -- (nomeia as colunas)
-	for(int i = 0; i < qnt_vertice_grafo_aresta; i++){ // O(N²)
+	for(int i = 0; i < qnt_vertice_grafo_aresta; i++){ // O(NÂ²)
 		printf("\t A(%d,%d)", vertice_grafo_aresta[i].x, vertice_grafo_aresta[i].y);
 	}
 	printf("\n");
@@ -227,9 +227,9 @@ void ler_grafo_aresta(vertice * vertice_grafo_aresta, int qnt_vertice_grafo_ares
 		// nomeia as linhas 
 		printf("A(%d,%d)", vertice_grafo_aresta[i].x, vertice_grafo_aresta[i].y);
 		for(int j = 0; j < qnt_vertice_grafo_aresta; j++){ 
-			// verifica se não é diagonal
+			// verifica se nÃ£o Ã© diagonal
 			if(i != j){
-				// verifica a partir de comparações para obter quais são as novas ligações, caso um vertice possua um vertice antigo em comum, conterá uma ligação no novo grafo
+				// verifica a partir de comparaÃ§Ãµes para obter quais sÃ£o as novas ligaÃ§Ãµes, caso um vertice possua um vertice antigo em comum, conterÃ¡ uma ligaÃ§Ã£o no novo grafo
 				if(vertice_grafo_aresta[i].x == vertice_grafo_aresta[j].x || vertice_grafo_aresta[i].x == vertice_grafo_aresta[j].y || vertice_grafo_aresta[i].y == vertice_grafo_aresta[j].x || vertice_grafo_aresta[i].y == vertice_grafo_aresta[j].y){
 					matriz_grafo_aresta[i][j] = 1;
 				} 
