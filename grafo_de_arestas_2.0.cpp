@@ -61,7 +61,7 @@ int main(){
 		scanf("%s", nome_arquivo);
 	}
 	
-	printf("Programa finalizado.\n");
+	printf("Programa finalizado.\n\n");
 	
 	free(nome_arquivo);
 	free(matriz_adjacencia);
